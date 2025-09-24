@@ -2,10 +2,17 @@ package com.algaworks.algafoodapi.di.notificacao;
 
 
 import com.algaworks.algafoodapi.di.modelo.Cliente;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
+@Profile("prod")
+@TipoDeNotificador(NivelUrgencia.PADRAO)
 @Component
 public class NotificadorEmail implements Notificador {
+
+    public NotificadorEmail() {
+        System.out.println("NotificadorEmail REAL");
+    }
 
     @Override
     public void notificar(Cliente cliente, String mensagem) {

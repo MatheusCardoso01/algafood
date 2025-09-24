@@ -1,25 +1,24 @@
 package com.algaworks.algafoodapi.di.service;
 
 import com.algaworks.algafoodapi.di.modelo.Cliente;
+import com.algaworks.algafoodapi.di.notificacao.NivelUrgencia;
 import com.algaworks.algafoodapi.di.notificacao.Notificador;
+import com.algaworks.algafoodapi.di.notificacao.TipoDeNotificador;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class AtivacaoClienteService implements Ativacao {
 
-    @Autowired(required = false)
+    @TipoDeNotificador(NivelUrgencia.PADRAO)
+    @Autowired
     private Notificador notificador;
 
     @Override
     public void ativar(Cliente cliente) {
         cliente.ativar();
 
-        if (notificador != null) {
-            notificador.notificar(cliente, "Seu cadastro no sistema está ativo!");
-        } else {
-            System.out.println("Não existe notificador, mas cliente foi ativado");
-        }
+        notificador.notificar(cliente, "Seu cadastro no sistema está ativo!");
     }
 
 }
