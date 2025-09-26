@@ -2,6 +2,7 @@ package com.algaworks.algafoodapi.jpa;
 
 import com.algaworks.algafoodapi.AlgafoodApiApplication;
 import com.algaworks.algafoodapi.domain.model.Cozinha;
+import com.algaworks.algafoodapi.domain.repository.CozinhaRepository;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
@@ -16,15 +17,15 @@ public class ConsultaCozinhaMain {
                 .web(WebApplicationType.NONE)
                 .run(args);
 
-        CadastroCozinha cadastroCozinha = applicationContext.getBean(CadastroCozinha.class);
+        CozinhaRepository cozinhaRepository = applicationContext.getBean(CozinhaRepository.class);
 
-        List<Cozinha> cozinhas = cadastroCozinha.listar();
+        List<Cozinha> todasAsCozinhas = cozinhaRepository.listarTodasAsCozinhas();
 
-        for (Cozinha cozinha : cozinhas) {
+        for (Cozinha cozinha : todasAsCozinhas) {
             System.out.println(cozinha.getNome());
         }
 
-        Cozinha cozinha10 = cadastroCozinha.buscar(1L);
+        Cozinha cozinha10 = cozinhaRepository.buscarId(1L);
         System.out.println(cozinha10.getNome());
 
     }

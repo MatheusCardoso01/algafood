@@ -2,6 +2,7 @@ package com.algaworks.algafoodapi.jpa;
 
 import com.algaworks.algafoodapi.AlgafoodApiApplication;
 import com.algaworks.algafoodapi.domain.model.Cozinha;
+import com.algaworks.algafoodapi.domain.repository.CozinhaRepository;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
@@ -15,7 +16,7 @@ public class AlteracaoCozinhaMain {
                 .web(WebApplicationType.NONE)
                 .run(args);
 
-        CadastroCozinha cadastroCozinha = applicationContext.getBean(CadastroCozinha.class);
+        CozinhaRepository cozinhaRepository = applicationContext.getBean(CozinhaRepository.class);
 
         Cozinha cozinha1 = new Cozinha();
         Cozinha cozinha3 = new Cozinha();
@@ -24,18 +25,19 @@ public class AlteracaoCozinhaMain {
         cozinha3.setId(3L);
         cozinha3.setNome("Lusitana");
 
-        cadastroCozinha.salvar(cozinha1);
-        cadastroCozinha.salvar(cozinha3);
+        cozinhaRepository.adicionar(cozinha1);
+        cozinhaRepository.adicionar(cozinha3);
 
-        List<Cozinha> cozinhas = cadastroCozinha.listar();
+        List<Cozinha> cozinhas = cozinhaRepository.listarTodasAsCozinhas();
 
         for (Cozinha cozinha : cozinhas) {
             System.out.println(cozinha.getNome());
         }
 
-        cadastroCozinha.remover(cozinha3);
+        cozinhaRepository.remover(cozinha3);
+
         System.out.println("==========================");
-        cozinhas = cadastroCozinha.listar();
+        cozinhas = cozinhaRepository.listarTodasAsCozinhas();
 
         for (Cozinha cozinha : cozinhas) {
             System.out.println(cozinha.getNome());
